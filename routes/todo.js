@@ -18,8 +18,6 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     //Create todo
-
-
     const { task } = req.body;
     const newTodo = await db.Todo.create({ task });
     res.status(201).send(newTodo);

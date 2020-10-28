@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
         tableName: "todos",
         timestamps:false //ไม่เอา crateTime กับ updateTime ใน Database
     })
+
+    model.associate = (models) => {
+        model.belongsTo(models.Person,{foreignKey:"person_id"});
+    }
+
     return model;
 }
 
