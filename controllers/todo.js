@@ -15,8 +15,8 @@ exports.getTodoById = async (req, res) => {
 
 exports.createToto = async (req, res) => {
     //Create todo
-    const { task } = req.body;
-    const newTodo = await db.Todo.create({ task });
+    const { task,person_id } = req.body;
+    const newTodo = await db.Todo.create({ task,person_id });
     res.status(201).send(newTodo);
 
 }
