@@ -1,3 +1,4 @@
+//สร้างตาราง
 module.exports = (sequelize, DataTypes) => {
     const model = sequelize.define("Todo", {
         task: DataTypes.STRING(255)

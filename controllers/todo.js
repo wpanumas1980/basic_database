@@ -2,7 +2,7 @@ const db = require('../models');
 
 exports.getAlltodos = async (req, res) => {
     //Get All todos
-    const allTodos = await db.Todo.findAll();
+    const allTodos = await db.Todo.findAll({ where: {  task, person_id: req.user.id } });
     res.status(200).send(allTodos);
 }
 
@@ -15,8 +15,8 @@ exports.getTodoById = async (req, res) => {
 
 exports.createToto = async (req, res) => {
     //Create todo
-    const { task,person_id } = req.body;
-    const newTodo = await db.Todo.create({ task,person_id });
+    const { task } = req.body;
+    const newTodo = await db.Todo.create({ task, person_id: req.user.id });
     res.status(201).send(newTodo);
 
 }
@@ -27,7 +27,7 @@ exports.upDateTodo = async (req, res) => {
     const { task } = req.body;
     const targetTodo = await db.Todo.findOne({ where: { id: targetId } });
 
-    if (targetTodo) {
+    if (targetTodo && targetTodo.person_id === req.user.id) {
         targetTodo.update({ task });
         res.status(200).send({ message: `Todo ID:${targetId} has been updated` });
     } else {
@@ -40,7 +40,7 @@ exports.deleteTodo = async (req, res) => {
     const targetId = req.params.id;
     const targetTodo = await db.Todo.findOne({ where: { id: targetId } });
 
-    if (targetTodo) {
+    if (targetTodo  && targetTodo.person_id === req.user.id) {
         targetTodo.destroy();
         res.status(200).send({ message: `Todo ID: ${ targetId } has been deleted.` });
       } else {

@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const todoController = require("../controllers/todo")
+const passport = require("passport");
 
-router.get("/",todoController.getAlltodos);
-router.get("/:id", todoController.getTodoById);
-router.post("/", todoController.createToto);
-router.put("/:id",todoController.upDateTodo);
-router.delete("/:id",todoController.deleteTodo);
+const auth = passport.authenticate("jwt", { session: false });
+
+router.get("/", auth, todoController.getAlltodos);
+router.get("/:id", auth, todoController.getTodoById);
+router.post("/", auth, todoController.createToto);
+router.put("/:id", auth, todoController.upDateTodo);
+router.delete("/:id", auth, todoController.deleteTodo);
 
 
 module.exports = router;
